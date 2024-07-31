@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Health & Fitness App</title>
+    <link rel="stylesheet" href="css/styles.css">
+    <style>
+        /* Additional inline styles for demonstration purposes */
+        .hero {
+            background-color: #007bff;
+            color: #fff;
+            padding: 50px 20px;
+            text-align: center;
+            border-radius: 8px;
+            margin-bottom: 30px;
+        }
+
+        .hero h1 {
+            font-size: 2.5rem;
+            margin-bottom: 20px;
+        }
+
+        .hero p {
+            font-size: 1.2rem;
+            margin-bottom: 20px;
+        }
+
+        .features {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+        }
+
+        .feature-card {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .feature-card h3 {
+            font-size: 1.5rem;
+            margin-bottom: 10px;
+        }
+
+        .feature-card p {
+            color: #666;
+            font-size: 1rem;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="hero">
+            <h1>Welcome to the Health & Fitness App</h1>
+            <p>Track your fitness goals, log your exercises, and manage your nutrition with our easy-to-use app.</p>
+            <p>Start your journey to a healthier lifestyle today!</p>
+        </div>
+
+        <h2>Explore Our Features</h2>
+          
+        <div class="features">
+            <!-- Feature: User Profile -->
+          <div class="feature-card">
+            <h3>User Profile</h3>
+            <p>Manage your profile details and keep track of your personal fitness journey.</p>
+            <a href="6.profile.html" class="cta-button">Go to Profile</a>
+        </div>
+            <!-- Feature: Fitness Tracker -->
+            <div class="feature-card">
+                <h3>Fitness Tracker</h3>
+                <p>Log your exercises, track your progress, and stay motivated on your fitness journey.</p>
+                <a href="2.FitnessTracker.html" class="cta-button">Go to Fitness Tracker</a>
+            </div>
+
+            <!-- Feature: Nutrition Tracker -->
+            <div class="feature-card">
+                <h3>Nutrition Tracker</h3>
+                <p>Monitor your daily intake, track calories, and manage your nutrition effectively.</p>
+                <a href="3.nutrition-tracker.html" class="cta-button">Go to Nutrition Tracker</a>
+            </div>
+
+            <!-- Feature: Goal Setting -->
+            <div class="feature-card">
+                <h3>Goal Setting</h3>
+                <p>Set achievable goals, track your progress, and receive motivational messages along the way.</p>
+                <a href="4.goalsetting.html" class="cta-button">Go to Goal Setting</a>
+            </div>
+
+            <!-- Feature: Workout Plans -->
+            <div class="feature-card">
+                <h3>Workout Plans</h3>
+                <p>Choose from various workout plans tailored to your fitness level and goals.</p>
+                <a href="5.workoutplans.html" class="cta-button">Go to Workout Plans</a>
+            </div>
+
+            <!-- Feature: Additional Features -->
+            <div class="feature-card">
+                <h3>Additional Features</h3>
+                <p>Explore social sharing, reminders, and analytics to enhance your fitness experience.</p>
+                <a href="7.Additionalfeautures.html" class="cta-button">Go to Additional Features</a>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

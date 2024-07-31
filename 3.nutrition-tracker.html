@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nutrition Tracker - Health & Fitness App</title>
+    <link rel="stylesheet" href="styles.css"> <!-- Assuming styles are in styles.css -->
+    <style>
+        /* Additional CSS for styling purposes */
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f4f4f4;
+            color: #333;
+            margin: 0;
+            padding: 0;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 20px auto;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        h1 {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .form-group {
+            margin-bottom: 15px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+
+        .form-group input {
+            width: 100%;
+            padding: 8px;
+            font-size: 1rem;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+
+        .button-container {
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        .submit-button {
+            background-color: #007bff;
+            color: #fff;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .submit-button:hover {
+            background-color: #0056b3;
+        }
+
+        .summary, .daily-summary {
+            margin-top: 30px;
+            padding: 20px;
+            background-color: #f0f0f0;
+            border-radius: 8px;
+        }
+
+        .summary h2, .daily-summary h2 {
+            margin-bottom: 10px;
+            color: #007bff;
+        }
+
+        .summary p, .daily-summary p {
+            font-size: 1.1rem;
+            line-height: 1.6;
+        }
+
+        .cta-button {
+            display: inline-block;
+            background-color: #007bff;
+            color: #fff;
+            padding: 10px 20px;
+            text-decoration: none;
+            border-radius: 5px;
+            transition: background-color 0.3s ease;
+            margin-top: 20px;
+            float: right;
+        }
+
+        .cta-button:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <h1>Nutrition Tracker</h1>
+
+        <!-- Meal Log Form -->
+        <form id="meal-form">
+            <div class="form-group">
+                <label for="food-item">Food Item:</label>
+                <input type="text" id="food-item" name="food-item" required>
+            </div>
+            <div class="form-group">
+                <label for="portion-size">Portion Size (grams):</label>
+                <input type="number" id="portion-size" name="portion-size" required>
+            </div>
+            <div class="form-group">
+                <label for="calories">Calories:</label>
+                <input type="number" id="calories" name="calories">
+            </div>
+            <div class="form-group">
+                <label for="protein">Protein (grams):</label>
+                <input type="number" id="protein" name="protein">
+            </div>
+            <div class="form-group">
+                <label for="carbs">Carbohydrates (grams):</label>
+                <input type="number" id="carbs" name="carbs">
+            </div>
+            <div class="form-group">
+                <label for="fat">Fat (grams):</label>
+                <input type="number" id="fat" name="fat">
+            </div>
+            <div class="button-container">
+                <button type="submit" class="submit-button">Log Meal</button>
+            </div>
+        </form>
+
+        <!-- Nutrition Summary -->
+        <div class="summary" id="nutrition-summary">
+            <h2>Nutrition Summary</h2>
+            <p>No meals logged yet.</p>
+        </div>
+
+        <!-- Daily Summary -->
+        <div class="daily-summary" id="daily-summary">
+            <h2>Daily Summary</h2>
+            <p>No data available.</p>
+        </div>
+
+        <!-- Functionality for Meal Logging and Daily Summary -->
+        <script>
+            // Check for existing summary in local storage
+            var dailySummary = JSON.parse(localStorage.getItem('dailySummary')) || {
+                totalCalories: 0,
+                totalProtein: 0,
+                totalCarbs: 0,
+                totalFat: 0,
+                meals: []
+            };
+
+            function updateDailySummary() {
+                var summaryHTML = '<h2>Daily Summary</h2>';
+                summaryHTML += '<p><strong>Total Calories:</strong> ' + dailySummary.totalCalories + '</p>';
+                summaryHTML += '<p><strong>Total Protein:</strong> ' + dailySummary.totalProtein + ' grams</p>';
+                summaryHTML += '<p><strong>Total Carbohydrates:</strong> ' + dailySummary.totalCarbs + ' grams</p>';
+                summaryHTML += '<p><strong>Total Fat:</strong> ' + dailySummary.totalFat + ' grams</p>';
+                document.getElementById('daily-summary').innerHTML = summaryHTML;
+            }
+
+            document.getElementById('meal-form').addEventListener('submit', function (event) {
+                event.preventDefault();
+
+                // Get input values
+                var foodItem = document.getElementById('food-item').value;
+                var portionSize = parseInt(document.getElementById('portion-size').value);
+                var calories = parseInt(document.getElementById('calories').value) || 0;
+                var protein = parseInt(document.getElementById('protein').value) || 0;
+                var carbs = parseInt(document.getElementById('carbs').value) || 0;
+                var fat = parseInt(document.getElementById('fat').value) || 0;
+
+                // Log the meal entry
+                var mealEntry = {
+                    foodItem: foodItem,
+                    portionSize: portionSize,
+                    calories: calories,
+                    protein: protein,
+                    carbs: carbs,
+                    fat: fat
+                };
+
+                // Update daily summary
+                dailySummary.meals.push(mealEntry);
+                dailySummary.totalCalories += calories;
+                dailySummary.totalProtein += protein;
+                dailySummary.totalCarbs += carbs;
+                dailySummary.totalFat += fat;
+
+                // Save to local storage
+                localStorage.setItem('dailySummary', JSON.stringify(dailySummary));
+
+                // Update Nutrition Summary
+                var summaryHTML = '<h2>Nutrition Summary</h2>';
+                summaryHTML += '<p><strong>Food Item:</strong> ' + foodItem + '</p>';
+                summaryHTML += '<p><strong>Portion Size:</strong> ' + portionSize + ' grams</p>';
+                summaryHTML += '<p><strong>Calories:</strong> ' + calories + '</p>';
+                summaryHTML += '<p><strong>Protein:</strong> ' + protein + ' grams</p>';
+                summaryHTML += '<p><strong>Carbohydrates:</strong> ' + carbs + ' grams</p>';
+                summaryHTML += '<p><strong>Fat:</strong> ' + fat + ' grams</p>';
+                document.getElementById('nutrition-summary').innerHTML = summaryHTML;
+
+                // Update daily summary display
+                updateDailySummary();
+
+                // Reset form
+                document.getElementById('meal-form').reset();
+            });
+
+            // Display initial daily summary
+            updateDailySummary();
+        </script>
+
+        <!-- Back to Home Link -->
+        <a href="index.html" class="cta-button">Back to Home</a>
+
+    </div>
+</body>
+
+</html>

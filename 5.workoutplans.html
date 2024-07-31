@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Workout Plans - Health & Fitness App</title>
+    <link rel="stylesheet" href="styles.css"> <!-- Assuming styles are in styles.css -->
+    <style>
+        /* Additional CSS for styling purposes */
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #e9ecef;
+            color: #333;
+            margin: 0;
+            padding: 0;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 20px auto;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        h1 {
+            text-align: center;
+            margin-bottom: 20px;
+            font-size: 2.5rem;
+            color: #007bff;
+        }
+
+        p {
+            text-align: center;
+            margin-bottom: 30px;
+            font-size: 1.2rem;
+            color: #555;
+        }
+
+        .workout-plan {
+            margin-bottom: 30px;
+            padding: 20px;
+            background-color: #f8f9fa;
+            border-radius: 10px;
+            border: 1px solid #dee2e6;
+        }
+
+        .workout-plan h2 {
+            color: #007bff;
+            font-size: 2rem;
+            margin-bottom: 15px;
+            border-bottom: 2px solid #007bff;
+            padding-bottom: 10px;
+        }
+
+        .exercise-list {
+            margin-bottom: 20px;
+        }
+
+        .exercise-list h3 {
+            font-size: 1.3rem;
+            color: #495057;
+            margin-bottom: 10px;
+        }
+
+        .exercise-list ul {
+            list-style-type: none;
+            padding-left: 0;
+        }
+
+        .exercise-list li {
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+        }
+
+        .exercise-icon {
+            width: 50px;
+            height: 50px;
+            background-size: cover;
+            border-radius: 50%;
+            margin-right: 15px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+        }
+
+        .exercise-status {
+            margin-top: 10px;
+        }
+
+        .exercise-status span {
+            display: inline-block;
+            width: 25px;
+            height: 25px;
+            background-color: #28a745;
+            color: #fff;
+            text-align: center;
+            line-height: 25px;
+            border-radius: 50%;
+            margin-right: 10px;
+            font-size: 1rem;
+        }
+
+        .submit-button {
+            display: inline-block;
+            background-color: #007bff;
+            color: #fff;
+            padding: 12px 24px;
+            text-decoration: none;
+            border-radius: 5px;
+            transition: background-color 0.3s ease, transform 0.2s ease;
+            cursor: pointer;
+            border: none;
+            margin-top: 10px;
+            font-size: 1rem;
+        }
+
+        .submit-button:hover {
+            background-color: #0056b3;
+            transform: scale(1.05);
+        }
+
+        .cta-button {
+            display: inline-block;
+            background-color: #007bff;
+            color: #fff;
+            padding: 12px 24px;
+            text-decoration: none;
+            border-radius: 5px;
+            transition: background-color 0.3s ease, transform 0.2s ease;
+            margin-top: 30px;
+            float: right;
+            font-size: 1rem;
+        }
+
+        .cta-button:hover {
+            background-color: #0056b3;
+            transform: scale(1.05);
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <h1>Workout Plans</h1>
+        <p>Choose a workout plan tailored to your fitness goals and level.</p>
+
+        <!-- Get Started Button -->
+        <button onclick="showWorkoutPlans()" class="submit-button">Get Started</button>
+
+        <!-- Workout Plan Sections -->
+        <div id="workout-plans" style="display: none;">
+            <!-- Beginner Workout Plans -->
+            <div class="workout-plan">
+                <h2>Beginner Workout Plans</h2>
+                <div class="exercise-list">
+                    <h3>Day 1 Exercises (For Weight Loss):</h3>
+                    <ul>
+                        <li><div class="exercise-icon" style="background-image: url('weight-loss-squats.png')"></div> Squats <span class="exercise-status" id="beginner-weight-loss-squats">-</span></li>
+                        <li><div class="exercise-icon" style="background-image: url('weight-loss-pushups.png')"></div> Push-ups <span class="exercise-status" id="beginner-weight-loss-pushups">-</span></li>
+                        <li><div class="exercise-icon" style="background-image: url('weight-loss-plank.png')"></div> Plank <span class="exercise-status" id="beginner-weight-loss-plank">-</span></li>
+                    </ul>
+                </div>
+                <div class="exercise-list">
+                    <h3>Day 2 Exercises (For Muscle Gain):</h3>
+                    <ul>
+                        <li><div class="exercise-icon" style="background-image: url('muscle-gain-squats.png')"></div> Squats <span class="exercise-status" id="beginner-muscle-gain-squats">-</span></li>
+                        <li><div class="exercise-icon" style="background-image: url('muscle-gain-pushups.png')"></div> Push-ups <span class="exercise-status" id="beginner-muscle-gain-pushups">-</span></li>
+                        <li><div class="exercise-icon" style="background-image: url('muscle-gain-plank.png')"></div> Plank <span class="exercise-status" id="beginner-muscle-gain-plank">-</span></li>
+                    </ul>
+                </div>
+                <!-- Buttons to track completed exercises -->
+                <button onclick="trackExercise('beginner-weight-loss', 'squats')" class="submit-button">Complete Squats (Weight Loss)</button>
+                <button onclick="trackExercise('beginner-weight-loss', 'pushups')" class="submit-button">Complete Push-ups (Weight Loss)</button>
+                <button onclick="trackExercise('beginner-weight-loss', 'plank')" class="submit-button">Complete Plank (Weight Loss)</button>
+                <button onclick="trackExercise('beginner-muscle-gain', 'squats')" class="submit-button">Complete Squats (Muscle Gain)</button>
+                <button onclick="trackExercise('beginner-muscle-gain', 'pushups')" class="submit-button">Complete Push-ups (Muscle Gain)</button>
+                <button onclick="trackExercise('beginner-muscle-gain', 'plank')" class="submit-button">Complete Plank (Muscle Gain)</button>
+            </div>
+
+            <!-- Intermediate Workout Plans -->
+            <div class="workout-plan">
+                <h2>Intermediate Workout Plans</h2>
+                <div class="exercise-list">
+                    <h3>Day 1 Exercises (For Abs):</h3>
+                    <ul>
+                        <li><div class="exercise-icon" style="background-image: url('abs-crunches.png')"></div> Crunches <span class="exercise-status" id="intermediate-abs-crunches">-</span></li>
+                        <li><div class="exercise-icon" style="background-image: url('abs-plank.png')"></div> Plank Variations <span class="exercise-status" id="intermediate-abs-plank">-</span></li>
+                        <li><div class="exercise-icon" style="background-image: url('abs-leg-raises.png')"></div> Leg Raises <span class="exercise-status" id="intermediate-abs-leg-raises">-</span></li>
+                    </ul>
+                </div>
+                <div class="exercise-list">
+                    <h3>Day 2 Exercises (For Muscle Gain):</h3>
+                    <ul>
+                        <li><div class="exercise-icon" style="background-image: url('muscle-gain-squats.png')"></div> Squats <span class="exercise-status" id="intermediate-muscle-gain-squats">-</span></li>
+                        <li><div class="exercise-icon" style="background-image: url('muscle-gain-pushups.png')"></div> Push-ups <span class="exercise-status" id="intermediate-muscle-gain-pushups">-</span></li>
+                        <li><div class="exercise-icon" style="background-image: url('muscle-gain-plank.png')"></div> Plank <span class="exercise-status" id="intermediate-muscle-gain-plank">-</span></li>
+                    </ul>
+                </div>
+                <!-- Buttons to track completed exercises -->
+                <button onclick="trackExercise('intermediate-abs', 'crunches')" class="submit-button">Complete Crunches (Abs)</button>
+                <button onclick="trackExercise('intermediate-abs', 'plank')" class="submit-button">Complete Plank Variations (Abs)</button>
+                <button onclick="trackExercise('intermediate-abs', 'leg-raises')" class="submit-button">Complete Leg Raises (Abs)</button>
+                <button onclick="trackExercise('intermediate-muscle-gain', 'squats')" class="submit-button">Complete Squats (Muscle Gain)</button>
+                <button onclick="trackExercise('intermediate-muscle-gain', 'pushups')" class="submit-button">Complete Push-ups (Muscle Gain)</button>
+                <button onclick="trackExercise('intermediate-muscle-gain', 'plank')" class="submit-button">Complete Plank (Muscle Gain)</button>
+            </div>
+
+            <!-- Advanced Workout Plans -->
+            <div class="workout-plan">
+                <h2>Advanced Workout Plans</h2>
+                <div class="exercise-list">
+                    <h3>Day 1 Exercises (Cardio):</h3>
+                    <ul>
+                        <li><div class="exercise-icon" style="background-image: url('cardio-running.png')"></div> Running <span class="exercise-status" id="advanced-running">-</span></li>
+                        <li><div class="exercise-icon" style="background-image: url('cardio-jumping-jacks.png')"></div> Jumping Jacks <span class="exercise-status" id="advanced-jacks">-</span></li>
+                        <li><div class="exercise-icon" style="background-image: url('cardio-burpees.png')"></div> Burpees <span class="exercise-status" id="advanced-burpees">-</span></li>
+                    </ul>
+                </div>
+                <div class="exercise-list">
+                    <h3>Day 2 Exercises (For Abs):</h3>
+                    <ul>
+                        <li><div class="exercise-icon" style="background-image: url('abs-crunches.png')"></div> Crunches <span class="exercise-status" id="advanced-abs-crunches">-</span></li>
+                        <li><div class="exercise-icon" style="background-image: url('abs-plank.png')"></div> Plank Variations <span class="exercise-status" id="advanced-abs-plank">-</span></li>
+                        <li><div class="exercise-icon" style="background-image: url('abs-leg-raises.png')"></div> Leg Raises <span class="exercise-status" id="advanced-abs-leg-raises">-</span></li>
+                    </ul>
+                </div>
+                <!-- Buttons to track completed exercises -->
+                <button onclick="trackExercise('advanced-cardio', 'running')" class="submit-button">Complete Running (Cardio)</button>
+                <button onclick="trackExercise('advanced-cardio', 'jacks')" class="submit-button">Complete Jumping Jacks (Cardio)</button>
+                <button onclick="trackExercise('advanced-cardio', 'burpees')" class="submit-button">Complete Burpees (Cardio)</button>
+                <button onclick="trackExercise('advanced-abs', 'crunches')" class="submit-button">Complete Crunches (Abs)</button>
+                <button onclick="trackExercise('advanced-abs', 'plank')" class="submit-button">Complete Plank Variations (Abs)</button>
+                <button onclick="trackExercise('advanced-abs', 'leg-raises')" class="submit-button">Complete Leg Raises (Abs)</button>
+            </div>
+        </div>
+
+        <!-- JavaScript for showing workout plans -->
+        <script>
+            // Function to show workout plans and hide Get Started button
+            function showWorkoutPlans() {
+                var workoutPlansDiv = document.getElementById('workout-plans');
+                workoutPlansDiv.style.display = 'block';
+                // Check and load completed exercises from localStorage
+                loadCompletedExercises();
+            }
+        
+            // Function to track completed exercises
+            function trackExercise(level, exercise) {
+                var exerciseElement = document.getElementById(level + '-' + exercise);
+                var exerciseKey = getExerciseKey(level, exercise);
+        
+                // Check if exercise was already completed today
+                if (localStorage.getItem(exerciseKey) === getTodayDateString()) {
+                    alert('You have already completed this exercise today.');
+                    return; // Exit function without updating or saving
+                }
+        
+                exerciseElement.innerHTML = '<span>&#10004;</span>'; // Display check mark
+                exerciseElement.classList.add('completed'); // Optional: Add completed class for styling
+        
+                // Save completion to localStorage with today's date as value
+                saveExerciseCompletion(level, exercise);
+                alert('Exercise "' + exercise + '" from ' + level + ' workout completed and tracked!');
+            }
+        
+            // Function to save exercise completion to localStorage
+            function saveExerciseCompletion(level, exercise) {
+                var exerciseKey = getExerciseKey(level, exercise);
+                localStorage.setItem(exerciseKey, getTodayDateString());
+            }
+        
+            // Function to load completed exercises from localStorage
+            function loadCompletedExercises() {
+                var exerciseElements = document.querySelectorAll('.exercise-status');
+                exerciseElements.forEach(function (element) {
+                    var exerciseId = element.id;
+                    var completionDate = localStorage.getItem(exerciseId);
+                    if (completionDate === getTodayDateString()) {
+                        element.innerHTML = '<span>&#10004;</span>';
+                        element.classList.add('completed');
+                    }
+                });
+            }
+        
+            // Helper function to generate exercise completion key
+            function getExerciseKey(level, exercise) {
+                return level + '-' + exercise;
+            }
+        
+            // Helper function to get today's date in YYYY-MM-DD format
+            function getTodayDateString() {
+                var today = new Date();
+                var year = today.getFullYear();
+                var month = ('0' + (today.getMonth() + 1)).slice(-2);
+                var day = ('0' + today.getDate()).slice(-2);
+                return year + '-' + month + '-' + day;
+            }
+        </script>
+
+        <!-- Back to Home Link -->
+        <a href="index.html" class="cta-button">Back to Home</a>
+    </div>
+</body>
+
+</html>

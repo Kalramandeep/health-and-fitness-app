@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Goal Setting - Health & Fitness App</title>
+    <link rel="stylesheet" href="styles.css"> <!-- Assuming styles are in styles.css -->
+    <style>
+        /* Additional CSS for styling purposes */
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f4f4f4;
+            color: #333;
+            margin: 0;
+            padding: 0;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 20px auto;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        h1 {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        p {
+            font-size: 1.1rem;
+            line-height: 1.6;
+        }
+
+        .form-group {
+            margin-bottom: 15px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+
+        .form-group select,
+        .form-group input[type="number"] {
+            width: 100%;
+            padding: 8px;
+            font-size: 1rem;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+
+        .button-container {
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        .submit-button {
+            background-color: #007bff;
+            color: #fff;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .submit-button:hover {
+            background-color: #0056b3;
+        }
+
+        .summary {
+            margin-top: 30px;
+            padding: 20px;
+            background-color: #f0f0f0;
+            border-radius: 8px;
+        }
+
+        .summary h2 {
+            margin-bottom: 10px;
+            color: #007bff;
+        }
+
+        .summary p {
+            font-size: 1.1rem;
+            line-height: 1.6;
+        }
+
+        .motivation {
+            margin-top: 30px;
+            padding: 20px;
+            background-color: #f9f9f9;
+            border-radius: 8px;
+        }
+
+        .motivation h2 {
+            margin-bottom: 10px;
+            color: #007bff;
+        }
+
+        .motivation p {
+            font-size: 1.1rem;
+            line-height: 1.6;
+        }
+
+        .motivation-messages {
+            margin-top: 15px;
+        }
+
+        .motivation-messages p {
+            margin-bottom: 5px;
+        }
+
+        .daily-summary {
+            margin-top: 30px;
+            padding: 20px;
+            background-color: #f0f0f0;
+            border-radius: 8px;
+        }
+
+        .daily-summary h2 {
+            margin-bottom: 10px;
+            color: #007bff;
+        }
+
+        .daily-summary p {
+            font-size: 1.1rem;
+            line-height: 1.6;
+        }
+
+        .cta-button {
+            display: inline-block;
+            background-color: #007bff;
+            color: #fff;
+            padding: 10px 20px;
+            text-decoration: none;
+            border-radius: 5px;
+            transition: background-color 0.3s ease;
+            margin-top: 20px;
+            float: right;
+        }
+
+        .cta-button:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <h1>Goal Setting</h1>
+        <p>Set and track your fitness goals with our goal setting feature.</p>
+
+        <!-- Goal Setting Form -->
+        <form id="goal-form">
+            <div class="form-group">
+                <label for="goal-type">Goal Type:</label>
+                <select id="goal-type" name="goal-type" required>
+                    <option value="">Select Goal Type</option>
+                    <option value="weight-loss">Weight Loss</option>
+                    <option value="muscle-gain">Muscle Gain</option>
+                    <option value="daily-steps">Daily Steps</option>
+                    <!-- Add more options as needed -->
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="target-value">Target Value:</label>
+                <input type="number" id="target-value" name="target-value" required>
+            </div>
+            <div class="button-container">
+                <button type="submit" class="submit-button">Set Goal</button>
+            </div>
+        </form>
+
+        <!-- Goal Progress -->
+        <div class="summary" id="goal-progress">
+            <h2>Goal Progress</h2>
+            <p>No goals set yet.</p>
+        </div>
+
+        <!-- Daily Summary -->
+        <div class="daily-summary" id="daily-summary">
+            <h2>Daily Goal Progress</h2>
+            <p>No data available.</p>
+        </div>
+
+        <!-- Motivational Messages -->
+        <div class="motivation" id="motivational-messages">
+            <h2>Motivational Messages</h2>
+            <p>Stay motivated with personalized messages!</p>
+            <div class="motivation-messages" id="motivation-messages"></div>
+        </div>
+
+        <!-- JavaScript for handling goal setting and progress tracking -->
+        <script>
+            // Initialize storage for daily goals
+            var dailyGoals = JSON.parse(localStorage.getItem('dailyGoals')) || {};
+
+            // Handle form submission
+            document.getElementById('goal-form').addEventListener('submit', function(event) {
+                event.preventDefault();
+
+                // Get input values
+                var goalType = document.getElementById('goal-type').value;
+                var targetValue = parseInt(document.getElementById('target-value').value);
+
+                // Confirm goal reset
+                if (dailyGoals.hasOwnProperty(goalType) && dailyGoals[goalType].currentProgress > 0) {
+                    var confirmReset = confirm("You already have progress for today's goal. Are you sure you want to reset?");
+                    if (!confirmReset) return;
+                }
+
+                // Display selected goal
+                var goalHTML = '<h2>Goal Progress</h2>';
+                goalHTML += '<p><strong>Goal Type:</strong> ' + goalType + '</p>';
+                goalHTML += '<p><strong>Target Value:</strong> ' + targetValue + '</p>';
+
+                // Display goal progress
+                document.getElementById('goal-progress').innerHTML = goalHTML;
+
+                // Update daily goal progress
+                updateDailyGoalProgress(goalType, targetValue);
+            });
+
+            // Function to update daily goal progress
+            function updateDailyGoalProgress(goalType, targetValue) {
+                // Get today's date
+                var today = new Date().toISOString().slice(0, 10);
+
+                // If there's no entry for today, initialize it
+                if (!dailyGoals[today]) {
+                    dailyGoals[today] = {};
+                }
+
+                // Initialize or update goal
+                dailyGoals[today][goalType] = {
+                    targetValue: targetValue,
+                    currentProgress: dailyGoals[today][goalType]?.currentProgress || 0
+                };
+
+                // Save to localStorage
+                localStorage.setItem('dailyGoals', JSON.stringify(dailyGoals));
+
+                // Update UI for daily goal progress
+                var dailyProgressHTML = '<h2>Daily Goal Progress</h2>';
+                dailyProgressHTML += '<p><strong>Date:</strong> ' + today + '</p>';
+                dailyProgressHTML += '<p><strong>Goal Type:</strong> ' + goalType + '</p>';
+                dailyProgressHTML += '<p><strong>Target Value:</strong> ' + targetValue + '</p>';
+                dailyProgressHTML += '<p><strong>Current Progress:</strong> ' + dailyGoals[today][goalType].currentProgress + '</p>';
+                document.getElementById('daily-summary').innerHTML = dailyProgressHTML;
+
+                updateMotivationalMessages(goalType);
+            }
+
+            // Load daily goal progress on page load
+            window.onload = function() {
+                var today = new Date().toISOString().slice(0, 10);
+                if (dailyGoals[today]) {
+                    var goalType = Object.keys(dailyGoals[today])[0];
+                    var targetValue = dailyGoals[today][goalType].targetValue;
+                    updateDailyGoalProgress(goalType, targetValue);
+                }
+            }
+
+            // Update motivational messages based on goal type
+            function updateMotivationalMessages(goalType) {
+                var messages = [];
+
+                // Example motivational messages based on goal type
+                switch (goalType) {
+                    case 'weight-loss':
+                        messages.push("You're on your way to a healthier you!");
+                        messages.push("Small steps lead to big changes.");
+                        break;
+                    case 'muscle-gain':
+                        messages.push("Keep pushing, your hard work will pay off!");
+                        messages.push("Every rep brings you closer to your goal.");
+                        break;
+                    case 'daily-steps':
+                        messages.push("Step by step, you're getting closer to your daily goal.");
+                        messages.push("Take a walk, your body will thank you.");
+                        break;
+                    default:
+                        break;
+                }
+
+                // Display messages
+                var messageHTML = '';
+                messages.forEach(function(message) {
+                    messageHTML += '<p>' + message + '</p>';
+                });
+
+                document.getElementById('motivation-messages').innerHTML = messageHTML;
+            }
+        </script>
+
+        <!-- Back to Home Link -->
+        <a href="index.html" class="cta-button">Back to Home</a>
+
+    </div>
+</body>
+
+</html>

@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fitness Tracker - Health & Fitness App</title>
+    <link rel="stylesheet" href="styles.css"> <!-- Assuming styles are in styles.css -->
+    <style>
+        /* Additional CSS for styling purposes */
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f4f4f4;
+            color: #333;
+            margin: 0;
+            padding: 0;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 20px auto;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        h1 {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .form-group {
+            margin-bottom: 15px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+
+        .form-group input {
+            width: 100%;
+            padding: 8px;
+            font-size: 1rem;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+
+        .button-container {
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        .submit-button {
+            background-color: #007bff;
+            color: #fff;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .submit-button:hover {
+            background-color: #0056b3;
+        }
+
+        .summary {
+            margin-top: 30px;
+            padding: 20px;
+            background-color: #f0f0f0;
+            border-radius: 8px;
+        }
+
+        .summary h2 {
+            margin-bottom: 10px;
+            color: #007bff;
+        }
+
+        .summary p {
+            font-size: 1.1rem;
+            line-height: 1.6;
+        }
+
+        .daily-logs {
+            margin-top: 20px;
+        }
+
+        .daily-log {
+            margin-bottom: 10px;
+            padding: 10px;
+            background-color: #e9ecef;
+            border-radius: 5px;
+        }
+
+        .daily-log p {
+            margin: 5px 0;
+        }
+
+        .cta-button {
+            display: inline-block;
+            background-color: #007bff;
+            color: #fff;
+            padding: 10px 20px;
+            text-decoration: none;
+            border-radius: 5px;
+            transition: background-color 0.3s ease;
+            margin-top: 20px;
+            float: right;
+        }
+
+        .cta-button:hover {
+            background-color: #0056b3;
+        }
+
+        .additional-content {
+            margin-top: 40px;
+            text-align: center;
+        }
+
+        .additional-content img {
+            width: 100%;
+            border-radius: 8px;
+        }
+
+        .tips {
+            margin-top: 20px;
+        }
+
+        .tips h2 {
+            color: #007bff;
+        }
+
+        .tips ul {
+            list-style-type: none;
+            padding: 0;
+        }
+
+        .tips li {
+            background-color: #e9ecef;
+            padding: 10px;
+            margin: 5px 0;
+            border-radius: 5px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <h1>Fitness Tracker</h1>
+
+        <!-- Exercise Log Form -->
+        <form id="exercise-form">
+            <div class="form-group">
+                <label for="exercise-type">Exercise Type:</label>
+                <input type="text" id="exercise-type" name="exercise-type" required>
+            </div>
+            <div class="form-group">
+                <label for="duration">Duration (minutes):</label>
+                <input type="number" id="duration" name="duration" required>
+            </div>
+            <div class="form-group">
+                <label for="distance">Distance (km/miles):</label>
+                <input type="number" id="distance" name="distance">
+            </div>
+            <div class="form-group">
+                <label for="calories-burned">Calories Burned:</label>
+                <input type="number" id="calories-burned" name="calories-burned">
+            </div>
+            <div class="button-container">
+                <button type="submit" class="submit-button">Log Exercise</button>
+            </div>
+        </form>
+
+        <!-- Daily Activity Logs -->
+        <div class="daily-logs" id="daily-logs">
+            <!-- Logs will be dynamically added here -->
+        </div>
+
+        <!-- Additional Content -->
+        <div class="additional-content">
+            <img src="12.png" alt="Fitness Image">
+            <div class="tips">
+                <h2>Fitness Tips</h2>
+                <ul>
+                    <li>Stay hydrated</li>
+                    <li>Maintain a balanced diet</li>
+                    <li>Get enough sleep</li>
+                    <li>Warm up before workouts</li>
+                    <li>Track your progress</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Functionality for Exercise Logging -->
+        <script>
+            // Initialize daily logs array
+            var dailyLogs = JSON.parse(localStorage.getItem('dailyLogs')) || [];
+
+            document.getElementById('exercise-form').addEventListener('submit', function (event) {
+                event.preventDefault();
+
+                // Get input values
+                var exerciseType = document.getElementById('exercise-type').value;
+                var duration = parseInt(document.getElementById('duration').value);
+                var distance = parseFloat(document.getElementById('distance').value);
+                var caloriesBurned = parseInt(document.getElementById('calories-burned').value);
+
+                // Create log object
+                var log = {
+                    exerciseType: exerciseType,
+                    duration: duration,
+                    distance: distance,
+                    caloriesBurned: caloriesBurned,
+                    date: new Date().toLocaleDateString() // Current date as string
+                };
+
+                // Add log to dailyLogs array
+                dailyLogs.push(log);
+
+                // Save logs to local storage
+                localStorage.setItem('dailyLogs', JSON.stringify(dailyLogs));
+
+                // Update daily logs display
+                updateDailyLogs();
+
+                // Reset form
+                document.getElementById('exercise-form').reset();
+            });
+
+            // Function to update daily logs display
+            function updateDailyLogs() {
+                var logsHTML = '';
+
+                // Iterate through dailyLogs array
+                dailyLogs.forEach(function (log) {
+                    logsHTML += '<div class="daily-log">';
+                    logsHTML += '<p><strong>Date:</strong> ' + log.date + '</p>';
+                    logsHTML += '<p><strong>Exercise Type:</strong> ' + log.exerciseType + '</p>';
+                    logsHTML += '<p><strong>Duration:</strong> ' + log.duration + ' minutes</p>';
+                    if (!isNaN(log.distance)) {
+                        logsHTML += '<p><strong>Distance:</strong> ' + log.distance + ' km/miles</p>';
+                    }
+                    if (!isNaN(log.caloriesBurned)) {
+                        logsHTML += '<p><strong>Calories Burned:</strong> ' + log.caloriesBurned + '</p>';
+                    }
+                    logsHTML += '</div>';
+                });
+
+                // Display logs
+                document.getElementById('daily-logs').innerHTML = logsHTML;
+            }
+
+            // Initial call to display logs
+            updateDailyLogs();
+        </script>
+
+        <!-- Back to Home Link -->
+        <a href="index.html" class="cta-button">Back to Home</a>
+
+    </div>
+</body>
+
+</html>

@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Profile - Health & Fitness App</title>
+    <style>/* styles.css */
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f4f4f4;
+            color: #333;
+            margin: 0;
+            padding: 0;
+        }
+        
+        .container {
+            max-width: 600px;
+            margin: 20px auto;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        
+        .profile-header {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        
+        .profile-header img {
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            object-fit: cover;
+        }
+        
+        .profile-header button {
+            display: block;
+            margin: 10px auto;
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+        
+        .profile-header button:hover {
+            background-color: #0056b3;
+        }
+        
+        .profile-info {
+            margin-bottom: 30px;
+            padding: 20px;
+            background-color: #f0f0f0;
+            border-radius: 8px;
+        }
+        
+        .profile-info p {
+            font-size: 1.1rem;
+            line-height: 1.6;
+            margin: 8px 0;
+        }
+        
+        .profile-info strong {
+            font-weight: bold;
+        }
+        
+        .profile-form {
+            padding: 20px;
+            background-color: #f9f9f9;
+            border-radius: 8px;
+        }
+        
+        .form-group {
+            margin-bottom: 15px;
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+        
+        .form-group input {
+            width: 100%;
+            padding: 8px;
+            font-size: 1rem;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+        
+        .button-container {
+            text-align: center;
+            margin-top: 20px;
+        }
+        
+        .submit-button {
+            background-color: #007bff;
+            color: #fff;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+        
+        .submit-button:hover {
+            background-color: #0056b3;
+        }
+        
+        .cta-button {
+            display: inline-block;
+            background-color: #007bff;
+            color: #fff;
+            padding: 10px 20px;
+            text-decoration: none;
+            border-radius: 5px;
+            transition: background-color 0.3s ease;
+            margin-top: 20px;
+            float: right;
+        }
+        
+        .cta-button:hover {
+            background-color: #0056b3;
+        }
+        </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Profile Header -->
+        <div class="profile-header">
+            <img id="profile-pic" src="default-profile.png" alt="Profile Picture">
+            <button id="upload-pic-btn">Upload Picture</button>
+            <h1 id="user-name">User Name</h1>
+            <p id="user-email">user@example.com</p>
+            <p><strong>Weight:</strong> <span id="profile-weight">75</span> kg</p>
+            <p><strong>Height:</strong> <span id="profile-height">180</span> cm</p>
+        </div>
+
+        
+
+        <!-- Update Profile Form -->
+        <div class="profile-form">
+            <h2>Update Profile</h2>
+            <form id="update-profile-form">
+                <div class="form-group">
+                    <label for="name">Name:</label>
+                    <input type="text" id="name" name="name" required>
+                </div>
+                <div class="form-group">
+                    <label for="email">Email:</label>
+                    <input type="email" id="email" name="email" required>
+                </div>
+                <div class="form-group">
+                    <label for="weight">Weight (kg):</label>
+                    <input type="number" id="weight" name="weight" required>
+                </div>
+                <div class="form-group">
+                    <label for="height">Height (cm):</label>
+                    <input type="number" id="height" name="height" required>
+                </div>
+                <div class="button-container">
+                    <button type="submit" class="submit-button">Update Profile</button>
+                </div>
+            </form>
+        </div>
+
+        <!-- Back to Home Link -->
+        <a href="index.html" class="cta-button">Back to Home</a>
+    </div>
+
+    <!-- JavaScript for functionality -->
+    <script>// script.js
+        document.addEventListener('DOMContentLoaded', function() {
+            // Handle profile picture upload
+            document.getElementById('upload-pic-btn').addEventListener('click', function() {
+                alert('Profile picture upload feature is not implemented.');
+            });
+        
+            // Handle profile update form submission
+            document.getElementById('update-profile-form').addEventListener('submit', function(event) {
+                event.preventDefault();
+        
+                // Get updated profile values
+                var name = document.getElementById('name').value;
+                var email = document.getElementById('email').value;
+                var weight = parseInt(document.getElementById('weight').value);
+                var height = parseInt(document.getElementById('height').value);
+        
+                // Update profile information display
+                document.getElementById('user-name').textContent = name;
+                document.getElementById('user-email').textContent = email;
+                document.getElementById('profile-weight').textContent = weight;
+                document.getElementById('profile-height').textContent = height;
+        
+                // Reset form
+                document.getElementById('update-profile-form').reset();
+            });
+        });
+        </script>
+</body>
+</html>
